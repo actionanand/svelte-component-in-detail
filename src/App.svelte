@@ -5,6 +5,7 @@
 	export let appName;
 
   let showModal = false;
+  let closable = false;
 
   let products = [
     {
@@ -43,12 +44,13 @@
 {#if showModal}
   <Modal 
     on:cancel="{() => showModal = false}"
-    on:close="{() => showModal = false}">
+    on:close="{() => showModal = false}"
+    let:didAgree={closable}>
     <h1 slot="header">Hello Modal!</h1>
     <div>
       Modal content goes here.
     </div>
-    <button slot="footer" on:click="{() => showModal = false}">
+    <button slot="footer" on:click="{() => showModal = false}" disabled={!closable}>
       Confirm
     </button>
   </Modal>
