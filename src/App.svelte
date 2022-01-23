@@ -3,6 +3,14 @@
 
 	export let appName;
 
+  let products = [
+    {
+      id: 'p1',
+      title: 'A Book',
+      price: '$ 9.8'
+    }
+  ];
+
   function addToCart(event) {
     console.log(event.detail.id); // we passed the data'{id: 'p1'}'
   }
@@ -19,7 +27,11 @@
 </style>
 
 <h1 class="capitalize-it">{appName}</h1>
-<Product productTitle="A book" 
-  on:add-to-cart={addToCart}
-  on:delete={deleteProduct}
-/>
+{#each products as product}
+  <Product
+    {...product}
+    on:add-to-cart={addToCart}
+    on:delete={deleteProduct}
+  />
+{/each}
+
