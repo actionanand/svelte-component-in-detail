@@ -1,8 +1,10 @@
 <script>
-  
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 </script>
 
-<div class="backdrop"></div>
+<div class="backdrop" on:click="{() => dispatch('cancel')}"></div>
 <div class="modal">
   <header>
     <slot name="header"/>
@@ -12,7 +14,7 @@
   </div>
   <footer>
     <slot name="footer">
-      <button>Close</button>
+      <button on:click="{() => dispatch('close')}">Close</button>
     </slot>
   </footer>
 </div>

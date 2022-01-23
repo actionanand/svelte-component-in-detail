@@ -4,6 +4,8 @@
 
 	export let appName;
 
+  let showModal = false;
+
   let products = [
     {
       id: 'p1',
@@ -36,11 +38,19 @@
   />
 {/each}
 
-<Modal>
-  <h1 slot="header">Hello Modal!</h1>
-  <div>
-    Modal content goes here.
-  </div>
-  <button slot="footer">Confirm</button>
-</Modal>
+<button on:click="{() => showModal = true}">Show Modal</button>
+
+{#if showModal}
+  <Modal 
+    on:cancel="{() => showModal = false}"
+    on:close="{() => showModal = false}">
+    <h1 slot="header">Hello Modal!</h1>
+    <div>
+      Modal content goes here.
+    </div>
+    <button slot="footer" on:click="{() => showModal = false}">
+      Confirm
+    </button>
+  </Modal>
+{/if}
 
