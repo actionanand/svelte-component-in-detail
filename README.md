@@ -126,6 +126,8 @@ surge public my-project.surge.sh
 1. [Official Docs (if)](https://svelte.dev/tutorial/if-blocks)
 1. [Official Docs (each)](https://svelte.dev/tutorial/each-blocks)
 1. [Official Docs (keys)](https://svelte.dev/tutorial/keyed-each-blocks)
+1. [Tick - official doc](https://svelte.dev/tutorial/tick)
+1. [2 amazing use case of tick() in Svelte that you must know](https://dev.to/tanhauhau/2-amazing-use-case-of-tick-in-svelte-that-you-must-know-8pa)
 1. [Event Modifier](https://svelte.dev/tutorial/event-modifiers)
 1. [Svelte Lifecycle hooks tutorial](https://reactgo.com/svelte-lifecycle-hooks-tutorial/)
 1. [The Component Lifecycle in Svelte](https://betterprogramming.pub/the-component-lifecycle-in-svelte-1784ecab5862)

@@ -103,9 +103,6 @@ var app = (function () {
     function space() {
         return text(' ');
     }
-    function empty() {
-        return text('');
-    }
     function listen(node, event, handler, options) {
         node.addEventListener(event, handler, options);
         return () => node.removeEventListener(event, handler, options);
@@ -172,6 +169,10 @@ var app = (function () {
             update_scheduled = true;
             resolved_promise.then(flush);
         }
+    }
+    function tick() {
+        schedule_update();
+        return resolved_promise;
     }
     function add_render_callback(fn) {
         render_callbacks.push(fn);
@@ -1096,15 +1097,15 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[8] = list[i];
+    	child_ctx[10] = list[i];
     	return child_ctx;
     }
 
-    // (34:0) {#each products as product}
+    // (58:0) {#each products as product}
     function create_each_block(ctx) {
     	let product;
     	let current;
-    	const product_spread_levels = [/*product*/ ctx[8]];
+    	const product_spread_levels = [/*product*/ ctx[10]];
     	let product_props = {};
 
     	for (let i = 0; i < product_spread_levels.length; i += 1) {
@@ -1124,8 +1125,8 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			const product_changes = (dirty & /*products*/ 4)
-    			? get_spread_update(product_spread_levels, [get_spread_object(/*product*/ ctx[8])])
+    			const product_changes = (dirty & /*products*/ 8)
+    			? get_spread_update(product_spread_levels, [get_spread_object(/*product*/ ctx[10])])
     			: {};
 
     			product.$set(product_changes);
@@ -1148,14 +1149,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(34:0) {#each products as product}",
+    		source: "(58:0) {#each products as product}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (44:0) {#if showModal}
+    // (68:0) {#if showModal}
     function create_if_block(ctx) {
     	let modal;
     	let current;
@@ -1165,18 +1166,18 @@ var app = (function () {
     				$$slots: {
     					footer: [
     						create_footer_slot,
-    						({ didAgree: closable }) => ({ 3: closable }),
-    						({ didAgree: closable }) => closable ? 8 : 0
+    						({ didAgree: closable }) => ({ 5: closable }),
+    						({ didAgree: closable }) => closable ? 32 : 0
     					],
     					header: [
     						create_header_slot,
-    						({ didAgree: closable }) => ({ 3: closable }),
-    						({ didAgree: closable }) => closable ? 8 : 0
+    						({ didAgree: closable }) => ({ 5: closable }),
+    						({ didAgree: closable }) => closable ? 32 : 0
     					],
     					default: [
     						create_default_slot,
-    						({ didAgree: closable }) => ({ 3: closable }),
-    						({ didAgree: closable }) => closable ? 8 : 0
+    						({ didAgree: closable }) => ({ 5: closable }),
+    						({ didAgree: closable }) => closable ? 32 : 0
     					]
     				},
     				$$scope: { ctx }
@@ -1184,8 +1185,8 @@ var app = (function () {
     			$$inline: true
     		});
 
-    	modal.$on("cancel", /*cancel_handler*/ ctx[6]);
-    	modal.$on("close", /*close_handler*/ ctx[7]);
+    	modal.$on("cancel", /*cancel_handler*/ ctx[8]);
+    	modal.$on("close", /*close_handler*/ ctx[9]);
 
     	const block = {
     		c: function create() {
@@ -1198,7 +1199,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const modal_changes = {};
 
-    			if (dirty & /*$$scope, closable, showModal*/ 2058) {
+    			if (dirty & /*$$scope, closable, showModal*/ 8226) {
     				modal_changes.$$scope = { dirty, ctx };
     			}
 
@@ -1222,14 +1223,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(44:0) {#if showModal}",
+    		source: "(68:0) {#if showModal}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (45:2) <Modal      on:cancel="{() => showModal = false}"     on:close="{() => showModal = false}"     let:didAgree={closable}>
+    // (69:2) <Modal      on:cancel="{() => showModal = false}"     on:close="{() => showModal = false}"     let:didAgree={closable}>
     function create_default_slot(ctx) {
     	let div;
 
@@ -1237,7 +1238,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			div.textContent = "Modal content goes here.";
-    			add_location(div, file, 49, 4, 962);
+    			add_location(div, file, 73, 4, 1802);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -1251,14 +1252,14 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(45:2) <Modal      on:cancel=\\\"{() => showModal = false}\\\"     on:close=\\\"{() => showModal = false}\\\"     let:didAgree={closable}>",
+    		source: "(69:2) <Modal      on:cancel=\\\"{() => showModal = false}\\\"     on:close=\\\"{() => showModal = false}\\\"     let:didAgree={closable}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (49:4) 
+    // (73:4) 
     function create_header_slot(ctx) {
     	let h1;
 
@@ -1267,7 +1268,7 @@ var app = (function () {
     			h1 = element("h1");
     			h1.textContent = "Hello Modal!";
     			attr_dev(h1, "slot", "header");
-    			add_location(h1, file, 48, 4, 922);
+    			add_location(h1, file, 72, 4, 1762);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -1281,14 +1282,14 @@ var app = (function () {
     		block,
     		id: create_header_slot.name,
     		type: "slot",
-    		source: "(49:4) ",
+    		source: "(73:4) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (53:4) 
+    // (77:4) 
     function create_footer_slot(ctx) {
     	let button;
     	let t;
@@ -1301,20 +1302,20 @@ var app = (function () {
     			button = element("button");
     			t = text("Confirm");
     			attr_dev(button, "slot", "footer");
-    			button.disabled = button_disabled_value = !/*closable*/ ctx[3];
-    			add_location(button, file, 52, 4, 1014);
+    			button.disabled = button_disabled_value = !/*closable*/ ctx[5];
+    			add_location(button, file, 76, 4, 1854);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
     			append_dev(button, t);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler_1*/ ctx[5], false, false, false);
+    				dispose = listen_dev(button, "click", /*click_handler_1*/ ctx[7], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*closable*/ 8 && button_disabled_value !== (button_disabled_value = !/*closable*/ ctx[3])) {
+    			if (dirty & /*closable*/ 32 && button_disabled_value !== (button_disabled_value = !/*closable*/ ctx[5])) {
     				prop_dev(button, "disabled", button_disabled_value);
     			}
     		},
@@ -1329,7 +1330,7 @@ var app = (function () {
     		block,
     		id: create_footer_slot.name,
     		type: "slot",
-    		source: "(53:4) ",
+    		source: "(77:4) ",
     		ctx
     	});
 
@@ -1343,11 +1344,12 @@ var app = (function () {
     	let t2;
     	let button;
     	let t4;
-    	let if_block_anchor;
+    	let t5;
+    	let textarea;
     	let current;
     	let mounted;
     	let dispose;
-    	let each_value = /*products*/ ctx[2];
+    	let each_value = /*products*/ ctx[3];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -1376,10 +1378,14 @@ var app = (function () {
     			button.textContent = "Show Modal";
     			t4 = space();
     			if (if_block) if_block.c();
-    			if_block_anchor = empty();
+    			t5 = space();
+    			textarea = element("textarea");
     			attr_dev(h1, "class", "capitalize-it svelte-12j0ty1");
-    			add_location(h1, file, 32, 0, 543);
-    			add_location(button, file, 41, 0, 715);
+    			add_location(h1, file, 56, 0, 1383);
+    			add_location(button, file, 65, 0, 1555);
+    			attr_dev(textarea, "rows", "5");
+    			textarea.value = /*text*/ ctx[2];
+    			add_location(textarea, file, 82, 0, 1981);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1397,19 +1403,24 @@ var app = (function () {
     			insert_dev(target, button, anchor);
     			insert_dev(target, t4, anchor);
     			if (if_block) if_block.m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
+    			insert_dev(target, t5, anchor);
+    			insert_dev(target, textarea, anchor);
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[4], false, false, false);
+    				dispose = [
+    					listen_dev(button, "click", /*click_handler*/ ctx[6], false, false, false),
+    					listen_dev(textarea, "keypress", /*transformText*/ ctx[4], false, false, false)
+    				];
+
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
     			if (!current || dirty & /*appName*/ 1) set_data_dev(t0, /*appName*/ ctx[0]);
 
-    			if (dirty & /*products, addToCart, deleteProduct*/ 4) {
-    				each_value = /*products*/ ctx[2];
+    			if (dirty & /*products, addToCart, deleteProduct*/ 8) {
+    				each_value = /*products*/ ctx[3];
     				validate_each_argument(each_value);
     				let i;
 
@@ -1447,7 +1458,7 @@ var app = (function () {
     					if_block = create_if_block(ctx);
     					if_block.c();
     					transition_in(if_block, 1);
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    					if_block.m(t5.parentNode, t5);
     				}
     			} else if (if_block) {
     				group_outros();
@@ -1457,6 +1468,10 @@ var app = (function () {
     				});
 
     				check_outros();
+    			}
+
+    			if (!current || dirty & /*text*/ 4) {
+    				prop_dev(textarea, "value", /*text*/ ctx[2]);
     			}
     		},
     		i: function intro(local) {
@@ -1487,9 +1502,10 @@ var app = (function () {
     			if (detaching) detach_dev(button);
     			if (detaching) detach_dev(t4);
     			if (if_block) if_block.d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
+    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(textarea);
     			mounted = false;
-    			dispose();
+    			run_all(dispose);
     		}
     	};
 
@@ -1518,6 +1534,7 @@ var app = (function () {
     	let { appName } = $$props;
     	let showModal = false;
     	let closable = false;
+    	let text = 'After selecting the text, please press "enter" to change the text to uppercase!';
 
     	let products = [
     		{
@@ -1526,6 +1543,24 @@ var app = (function () {
     			price: '$ 9.8'
     		}
     	];
+
+    	function transformText(event) {
+    		if (event.which !== 13) {
+    			return;
+    		}
+
+    		event.preventDefault();
+    		const selectionStart = event.target.selectionStart;
+    		const selectionEnd = event.target.selectionEnd;
+    		const value = event.target.value;
+    		$$invalidate(2, text = value.slice(0, selectionStart) + value.slice(selectionStart, selectionEnd).toUpperCase() + value.slice(selectionEnd));
+
+    		tick().then(() => {
+    			event.target.selectionStart = selectionStart;
+    			event.target.selectionEnd = selectionEnd;
+    		});
+    	} // Code won't work as it'll run before dom update
+    	// event.target.selectionStart = selectionStart;
 
     	const writable_props = ['appName'];
 
@@ -1543,21 +1578,25 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => ({
+    		tick,
     		Product,
     		Modal,
     		appName,
     		showModal,
     		closable,
+    		text,
     		products,
     		addToCart,
-    		deleteProduct
+    		deleteProduct,
+    		transformText
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('appName' in $$props) $$invalidate(0, appName = $$props.appName);
     		if ('showModal' in $$props) $$invalidate(1, showModal = $$props.showModal);
-    		if ('closable' in $$props) $$invalidate(3, closable = $$props.closable);
-    		if ('products' in $$props) $$invalidate(2, products = $$props.products);
+    		if ('closable' in $$props) $$invalidate(5, closable = $$props.closable);
+    		if ('text' in $$props) $$invalidate(2, text = $$props.text);
+    		if ('products' in $$props) $$invalidate(3, products = $$props.products);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -1567,7 +1606,9 @@ var app = (function () {
     	return [
     		appName,
     		showModal,
+    		text,
     		products,
+    		transformText,
     		closable,
     		click_handler,
     		click_handler_1,
