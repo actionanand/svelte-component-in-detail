@@ -4,7 +4,17 @@
 
 <div class="backdrop"></div>
 <div class="modal">
-  <slot/>
+  <header>
+    <slot name="header"/>
+  </header>
+  <div class="content">
+    <slot/>
+  </div>
+  <footer>
+    <slot name="footer">
+      <button>Close</button>
+    </slot>
+  </footer>
 </div>
 
 <style>
@@ -30,5 +40,9 @@
     z-index: 100;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     overflow: auto;
+  }
+
+  header {
+    border-bottom: 1px solid #ccc;
   }
 </style>

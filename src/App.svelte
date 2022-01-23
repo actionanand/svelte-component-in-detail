@@ -37,6 +37,10 @@
 {/each}
 
 <Modal>
-  <h1>Hello World!</h1>
+  <h1 slot="header">Hello Modal!</h1>
+  <div>
+    Modal content goes here.
+  </div>
+  <button slot="footer">Confirm</button>
 </Modal>
 
